@@ -1,4 +1,4 @@
-import Team from '../js/Team';
+import Team from './Team';
 /**
  * Формирует экземпляр персонажа из массива allowedTypes со
  * случайным уровнем от 1 до maxLevel
@@ -11,11 +11,20 @@ import Team from '../js/Team';
  */
 export function* characterGenerator(allowedTypes, maxLevel) {
   // let randomIndex = Math.floor(1 + Math.random() * allowedTypes.length - 2 + 1)
-  let randomLevel = Math.floor(1 + Math.random() * maxLevel - 1 + 1)
-  console.log(allowedTypes)
-  for(const hero of allowedTypes){
-    yield new hero(randomLevel);
+  let randomLevel = 0;
+  let count = 0;
+  for (count; count < allowedTypes.length + 1; count += 1) {
+    if (count === allowedTypes.length) {
+      count = 0;
+    }
+    count = Math.floor(1 + Math.random() * allowedTypes.length - 1 - 1 + 1);
+    randomLevel = Math.floor(1 + Math.random() * maxLevel - 1 + 1);
+    yield new allowedTypes[count](randomLevel);
   }
+  // for (const hero of allowedTypes) {
+  //   randomLevel = Math.floor(1 + Math.random() * maxLevel - 1 + 1);
+  //   yield new hero(randomLevel);
+  // }
 }
 
 /**
@@ -23,16 +32,15 @@ export function* characterGenerator(allowedTypes, maxLevel) {
  * @param allowedTypes массив классов
  * @param maxLevel максимальный возможный уровень персонажа
  * @param characterCount количество персонажей, которое нужно сформировать
- * @returns экземпляр Team, хранящий экземпляры персонажей. Количество персонажей в команде - characterCount
+ * @returns экземпляр Team, хранящий экземпляры персонажей.
+ * Количество персонажей в команде - characterCount
  * */
 export function generateTeam(allowedTypes, maxLevel, characterCount) {
-  let characters = [];
-  let generator = characterGenerator(allowedTypes, maxLevel)
-  console.log(generator)
-  for (let i = 0; i < characterCount; i++) {
-    characters.push(generator.next().value)
+  const characters = [];
+  const generator = characterGenerator(allowedTypes, maxLevel);
+  for (let i = 0; i < characterCount; i += 1) {
+    characters.push(generator.next().value);
   }
-  console.log(characters)
-  return new Team(characters)
+  return new Team(characters);
   // TODO: write logic here
 }

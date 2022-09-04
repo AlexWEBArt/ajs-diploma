@@ -14,7 +14,7 @@
  */
 export default class Character {
   constructor(level, type = 'generic') {
-    if (new.target.name === Character) throw Error("invalid Character() class used");
+    if (new.target.name === 'Character') throw Error('invalid Character() class used');
     this.level = level;
     this.attack = 0;
     this.defence = 0;
