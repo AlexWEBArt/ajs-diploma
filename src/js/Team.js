@@ -12,5 +12,10 @@
  * ```
  * */
 export default class Team {
+  constructor(сharacters) {
+    this.characters = [];
+    сharacters.forEach((item) => this.characters.push(item))
+    console.log(this.characters)
+  }
   // TODO: write your logic here
 }
