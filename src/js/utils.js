@@ -40,7 +40,6 @@ export function calcTileType(index, boardSize) {
   if (index === boardSize - 1) {
     tileType = 'top-right';
   }
-
   if (index === boardSize * boardSize - boardSize) {
     tileType = 'bottom-left';
   }
