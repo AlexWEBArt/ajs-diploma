@@ -16,6 +16,7 @@
             "error",
             "LabeledStatement",
             "WithStatement"
-          ]
+          ],
+        "max-len": ["error", { "code": 220 }]
     }
 }

@@ -23,34 +23,24 @@
  * ```
  * */
 export function calcTileType(index, boardSize) {
-  let tileType = 'center';
-
-  if (Number.isInteger((boardSize * boardSize - index) / boardSize)) {
-    tileType = 'left';
-  }
-  if (Number.isInteger((boardSize * boardSize - index - 1) / boardSize)) {
-    tileType = 'right';
-  }
   if (index === 0) {
-    tileType = 'top-left';
+    return 'top-left';
+  } if (index === boardSize - 1) {
+    return 'top-right';
+  } if (index === boardSize * boardSize - boardSize) {
+    return 'bottom-left';
+  } if (index === boardSize * boardSize - 1) {
+    return 'bottom-right';
+  } if (Number.isInteger((boardSize * boardSize - index) / boardSize)) {
+    return 'left';
+  } if (Number.isInteger((boardSize * boardSize - index - 1) / boardSize)) {
+    return 'right';
+  } if (index > 0 && index < boardSize) {
+    return 'top';
+  } if (index > boardSize * boardSize - boardSize) {
+    return 'bottom';
   }
-  if (index > 0 && index < boardSize) {
-    tileType = 'top';
-  }
-  if (index === boardSize - 1) {
-    tileType = 'top-right';
-  }
-  if (index === boardSize * boardSize - boardSize) {
-    tileType = 'bottom-left';
-  }
-  if (index > boardSize * boardSize - boardSize) {
-    tileType = 'bottom';
-  }
-  if (index === boardSize * boardSize - 1) {
-    tileType = 'bottom-right';
-  }
-
-  return tileType;
+  return 'center';
 }
 
 export function calcHealthLevel(health) {

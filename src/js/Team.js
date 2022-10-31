@@ -24,32 +24,32 @@ import PositionedCharacter from './PositionedCharacter';
 export default class Team {
   constructor(сharacters) {
     this.playerTeam = [];
-    this.positionedPlayerTeam = [];
     this.computerTeam = [];
-    this.positionedComputerTeam = [];
+    this.positionedTeam = [];
     this.position = new Set();
     сharacters.forEach((item) => {
-      if (item instanceof Bowman 
-        || item instanceof Swordsman 
+      if (item instanceof Bowman
+        || item instanceof Swordsman
         || item instanceof Magician) {
-          this.playerTeam.push(item)
+        this.playerTeam.push(item);
       }
-      if (item instanceof Vampire 
-        || item instanceof Undead 
+      if (item instanceof Vampire
+        || item instanceof Undead
         || item instanceof Daemon) {
-          this.computerTeam.push(item)
+        this.computerTeam.push(item);
       }
     });
   }
 
-  createRandomPosition(validPosition) {
-    let team, positionedTeam;
-    if (validPosition[0] === 0) {
+  createTeam() {
+    let team; let
+      validPosition;
+    if (this.playerTeam.length !== 0) {
       team = this.playerTeam;
-      positionedTeam = this.positionedPlayerTeam;
+      validPosition = [0, 1, 8, 9, 16, 17, 24, 25, 32, 33, 40, 41, 48, 49, 56, 57];
     } else {
       team = this.computerTeam;
-      positionedTeam = this.positionedComputerTeam;
+      validPosition = [6, 7, 14, 15, 22, 23, 30, 31, 38, 39, 46, 47, 54, 55, 62, 63];
     }
 
     this.position.clear();
@@ -58,25 +58,19 @@ export default class Team {
       this.position.add(validPosition[Math.floor(1 + Math.random() * 15 - 1 + 1)]);
     }
 
-    let positionPlayerCounter = 0;
+    let positionCounter = 0;
     for (const character of team) {
-      positionedTeam.push(new PositionedCharacter(character, Array.from(this.position)[positionPlayerCounter]));
-      positionPlayerCounter += 1;
+      this.positionedTeam.push(new PositionedCharacter(character, Array.from(this.position)[positionCounter]));
+      positionCounter += 1;
     }
-  }
 
-  createPlayerTeam() {
-    const validPlayerPosition = [0, 1, 8, 9, 16, 17, 24, 25, 32, 33, 40, 41, 48, 49, 56, 57];
-    this.createRandomPosition(validPlayerPosition)
-
-    return new PlayerTeam(this.positionedPlayerTeam)
-  }
-
-  createComputerTeam() {
-    const validComputerPosition = [6, 7, 14, 15, 22, 23, 30, 31, 38, 39, 46, 47, 54, 55, 62, 63];
-    this.createRandomPosition(validComputerPosition)
-
-    return new ComputerTeam(this.positionedComputerTeam)
+    if (team === this.playerTeam) {
+      return new PlayerTeam(this.positionedTeam);
+    }
+    if (team === this.computerTeam) {
+      return new ComputerTeam(this.positionedTeam);
+    }
+    return null;
   }
   // TODO: write your logic here
 }

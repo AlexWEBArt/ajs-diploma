@@ -13,18 +13,19 @@ export function* characterGenerator(allowedTypes, maxLevel) {
   // let randomIndex = Math.floor(1 + Math.random() * allowedTypes.length - 2 + 1)
   let randomLevel = 0;
   let count = 0;
-  for (count; count < allowedTypes.length + 1; count += 1) {
-    if (count === allowedTypes.length) {
-      count = 0;
-    }
+  // for (count; count < allowedTypes.length + 1; count += 1) {
+  //   if (count === allowedTypes.length) {
+  //     count = 0;
+  //   }
+  //   count = Math.floor(1 + Math.random() * allowedTypes.length - 1 - 1 + 1);
+  //   randomLevel = Math.floor(1 + Math.random() * maxLevel - 1 + 1);
+  //   yield new allowedTypes[count](randomLevel);
+  // }
+  while (true) {
     count = Math.floor(1 + Math.random() * allowedTypes.length - 1 - 1 + 1);
     randomLevel = Math.floor(1 + Math.random() * maxLevel - 1 + 1);
     yield new allowedTypes[count](randomLevel);
   }
-  // for (const hero of allowedTypes) {
-  //   randomLevel = Math.floor(1 + Math.random() * maxLevel - 1 + 1);
-  //   yield new hero(randomLevel);
-  // }
 }
 
 /**
