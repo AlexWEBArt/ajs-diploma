@@ -15,15 +15,15 @@ test('checking whether the character Generator infinitely new characters from th
   expect(characters.length).toBe(countIterations);
 });
 
-test('checking whether characters are created in the right number and range of levels', () => {
+test('checking whether playerTeam are created in the right number and range of levels', () => {
   const characterCount = 5;
   const maxLevel = 4;
 
   const playerTypes = [Bowman, Swordsman, Magician];
   const generator = generateTeam(playerTypes, maxLevel, characterCount);
 
-  const filter = generator.characters.filter((item) => item.level <= maxLevel && item.level >= 0);
+  const filter = generator.playerTeam.filter((item) => item.level <= maxLevel && item.level >= 0);
 
-  expect(generator.characters.length).toBe(characterCount);
-  expect(generator.characters.length).toBe(filter.length);
+  expect(generator.playerTeam.length).toBe(characterCount);
+  expect(generator.playerTeam.length).toBe(filter.length);
 });

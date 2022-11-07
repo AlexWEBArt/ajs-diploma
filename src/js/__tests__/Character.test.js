@@ -7,6 +7,8 @@ test('checking the class Character for throw Error', () => {
 
 test('checking the class Bowman for creation', () => {
   const checkHero = {
+    areaOfMovement: null,
+    attackRadius: null,
     attack: 25,
     defence: 25,
     health: 50,
