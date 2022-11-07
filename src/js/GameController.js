@@ -165,7 +165,7 @@ export default class GameController {
     // TODO: react to mouse leave
   }
 
-  static findShow(player) {
+  findShow(player) {
     const { character } = player;
     return `\u{1F396} ${character.level} \u{2694} ${character.attack} \u{1F6E1} ${character.defence} \u{2764} ${character.health}`;
   }
