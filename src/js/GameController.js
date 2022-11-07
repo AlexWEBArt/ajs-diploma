@@ -22,7 +22,7 @@ export default class GameController {
     this.turn = 'player';
     this.onCellEnter = this.onCellEnter.bind(this);
     this.onCellLeave = this.onCellLeave.bind(this);
-    this.onCellClick = this.onCellClick.bind(this);``
+    this.onCellClick = this.onCellClick.bind(this);
   }
 
   init() {
