@@ -22,7 +22,7 @@ export default class GameController {
     this.turn = 'player';
     this.onCellEnter = this.onCellEnter.bind(this);
     this.onCellLeave = this.onCellLeave.bind(this);
-    this.onCellClick = this.onCellClick.bind(this);
+    this.onCellClick = this.onCellClick.bind(this);``
   }
 
   init() {
@@ -127,7 +127,7 @@ export default class GameController {
     this.target = this.computerTeam.characters.find((item) => item.position === index);
 
     if (player) {
-      this.gamePlay.showCellTooltip(`${this.findShow(player)}`, index);
+      this.gamePlay.showCellTooltip(`${GameController.findShow(player)}`, index);
       this.gamePlay.setCursor(cursors.pointer);
     }
     if (!player
@@ -165,7 +165,7 @@ export default class GameController {
     // TODO: react to mouse leave
   }
 
-  findShow(player) {
+  static findShow(player) {
     const { character } = player;
     return `\u{1F396} ${character.level} \u{2694} ${character.attack} \u{1F6E1} ${character.defence} \u{2764} ${character.health}`;
   }
