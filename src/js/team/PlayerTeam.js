@@ -1,7 +1,3 @@
-import Bowman from '../characters/Bowman';
-import Magician from '../characters/Magician';
-import Swordsman from '../characters/Swordsman';
-
 export default class PlayerTeam {
   constructor(characters) {
     this.characters = characters;
@@ -41,7 +37,7 @@ export default class PlayerTeam {
       if (item.includes(activePlayer.position)) {
         x = item.findIndex((num) => num === activePlayer.position);
         y = this.fd.findIndex((elem) => elem === item);
-        if (activePlayer.character instanceof Magician) {
+        if (activePlayer.character.type === 'magician') {
           if (y === 0) {
             this.areaOfMovement = [
               this.fd[y][x - 1], this.fd[y][x + 1],
@@ -60,7 +56,7 @@ export default class PlayerTeam {
             ];
           }
         }
-        if (activePlayer.character instanceof Bowman) {
+        if (activePlayer.character.type === 'bowman') {
           if (y === 0) {
             this.areaOfMovement = [
               this.fd[y][x - 2], this.fd[y][x - 1], this.fd[y][x + 1], this.fd[y][x + 2],
@@ -97,7 +93,7 @@ export default class PlayerTeam {
             ];
           }
         }
-        if (activePlayer.character instanceof Swordsman) {
+        if (activePlayer.character.type === 'swordsman') {
           if (y === 0) {
             this.areaOfMovement = [
               this.fd[y][x - 4], this.fd[y][x - 3], this.fd[y][x - 2], this.fd[y][x - 1], this.fd[y][x + 1], this.fd[y][x + 2], this.fd[y][x + 3], this.fd[y][x + 4],
@@ -200,7 +196,7 @@ export default class PlayerTeam {
       if (item.includes(activePlayer.position)) {
         x = item.findIndex((num) => num === activePlayer.position);
         y = this.fd.findIndex((elem) => elem === item);
-        if (activePlayer.character instanceof Swordsman) {
+        if (activePlayer.character.type === 'swordsman') {
           if (y === 0) {
             this.attackRadius = [
               this.fd[y][x - 1], this.fd[y][x + 1],
@@ -219,7 +215,7 @@ export default class PlayerTeam {
             ];
           }
         }
-        if (activePlayer.character instanceof Bowman) {
+        if (activePlayer.character.type === 'bowman') {
           if (y === 0) {
             this.attackRadius = [
               this.fd[y][x - 2], this.fd[y][x - 1], this.fd[y][x + 1], this.fd[y][x + 2],
@@ -256,7 +252,7 @@ export default class PlayerTeam {
             ];
           }
         }
-        if (activePlayer.character instanceof Magician) {
+        if (activePlayer.character.type === 'magician') {
           // this.areaOfMovement = [
           //     this.fd[y - 4][x - 4], this.fd[y - 4][x - 3], this.fd[y - 4][x - 2], this.fd[y - 4][x - 1], this.fd[y - 4][x], this.fd[y - 4][x + 1], this.fd[y - 4][x + 2], this.fd[y - 4][x + 3], this.fd[y - 4][x + 4],
           //     this.fd[y - 3][x - 4], this.fd[y - 3][x - 3], this.fd[y - 3][x - 2], this.fd[y - 3][x - 1], this.fd[y - 3][x], this.fd[y - 3][x + 1], this.fd[y - 3][x + 2], this.fd[y - 3][x + 3], this.fd[y - 3][x + 4],

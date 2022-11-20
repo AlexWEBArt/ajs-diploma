@@ -42,8 +42,8 @@ export default class Team {
   }
 
   createTeam() {
-    let team; let
-      validPosition;
+    let team;
+    let validPosition;
     if (this.playerTeam.length !== 0) {
       team = this.playerTeam;
       validPosition = [0, 1, 8, 9, 16, 17, 24, 25, 32, 33, 40, 41, 48, 49, 56, 57];

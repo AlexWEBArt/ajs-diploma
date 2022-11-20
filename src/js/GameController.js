@@ -1,5 +1,12 @@
+import GamePlay from './GamePlay';
+import GameStateService from './GameStateService';
+
+import PlayerTeam from './team/PlayerTeam';
+import ComputerTeam from './team/ComputerTeam';
+
 import { generateTeam } from './generators';
 import cursors from './cursors';
+import themes from './themes';
 import Bowman from './characters/Bowman';
 import Daemon from './characters/Daemon';
 import Magician from './characters/Magician';
@@ -19,14 +26,18 @@ export default class GameController {
     this.heroTarget = null;
     this.villainTarget = null;
     this.target = null;
+    this.startThemes = 'prairie';
     this.turn = 'player';
     this.onCellEnter = this.onCellEnter.bind(this);
     this.onCellLeave = this.onCellLeave.bind(this);
     this.onCellClick = this.onCellClick.bind(this);
+    this.onNewGameClick = this.onNewGameClick.bind(this);
+    this.onSaveGameClick = this.onSaveGameClick.bind(this);
+    this.onLoadGameClick = this.onLoadGameClick.bind(this);
   }
 
   init() {
-    this.gamePlay.drawUi('prairie');
+    this.gamePlay.drawUi(this.startThemes);
 
     for (const hero of this.playerTeam.characters) {
       this.players.push(hero);
@@ -40,6 +51,9 @@ export default class GameController {
     this.gamePlay.addCellEnterListener(this.onCellEnter);
     this.gamePlay.addCellLeaveListener(this.onCellLeave);
     this.gamePlay.addCellClickListener(this.onCellClick);
+    this.gamePlay.addNewGameListener(this.onNewGameClick);
+    this.gamePlay.addSaveGameListener(this.onSaveGameClick);
+    this.gamePlay.addLoadGameListener(this.onLoadGameClick);
     // TODO: add event listeners to gamePlay events
     // TODO: load saved stated from stateService
   }
@@ -117,6 +131,36 @@ export default class GameController {
       this.turn = 'player';
     }
 
+    if (!this.computerTeam.characters[0]) {
+      this.levelUp();
+      let nextIndexThemes = Object.values(themes).findIndex((item) => item === document.querySelector('#game-container').querySelector('[data-id=board]').classList[1]) + 1;
+
+      if (nextIndexThemes > Object.values(themes).length - 1) {
+        nextIndexThemes = 0;
+      }
+      this.startThemes = Object.values(themes)[nextIndexThemes];
+      this.gamePlay.drawUi(this.startThemes);
+
+      this.computerTeam = generateTeam([Vampire, Undead, Daemon], 4, 3).createTeam();
+      for (const villain of this.computerTeam.characters) {
+        this.players.push(villain);
+      }
+
+      const position = new Set();
+      // position.clear();
+      for (let i = 0; i <= 16 - 1; i += 1) {
+        position.add([0, 1, 8, 9, 16, 17, 24, 25, 32, 33, 40, 41, 48, 49, 56, 57][Math.floor(1 + Math.random() * 15 - 1 + 1)]);
+      }
+      this.playerTeam.characters.forEach((item, i) => {
+        item.position = Array.from(position)[i];
+      });
+
+      this.activePlayer = null;
+      this.turn = 'player';
+
+      this.gamePlay.redrawPositions(this.players);
+    }
+
     // TODO: react to click
   }
 
@@ -163,6 +207,68 @@ export default class GameController {
       this.gamePlay.deselectCell(index);
     }
     // TODO: react to mouse leave
+  }
+
+  onNewGameClick() {
+    this.gamePlay = new GamePlay();
+    this.gamePlay.bindToDOM(document.querySelector('#game-container'));
+
+    this.stateService = new GameStateService(localStorage);
+    this.playerTeam = generateTeam([Bowman, Swordsman, Magician], 4, 3).createTeam();
+    this.computerTeam = generateTeam([Vampire, Undead, Daemon], 4, 3).createTeam();
+    this.players = [];
+    this.activePlayer = null;
+    this.heroTarget = null;
+    this.villainTarget = null;
+    this.target = null;
+    this.startThemes = 'prairie';
+    this.turn = 'player';
+
+    this.init();
+  }
+
+  onLoadGameClick() {
+    const loadGame = this.stateService.load();
+
+    this.gamePlay = new GamePlay();
+    this.gamePlay.bindToDOM(document.querySelector('#game-container'));
+
+    this.stateService = loadGame.stateService;
+
+    this.playerTeam = new PlayerTeam(loadGame.playerTeam.characters);
+    this.computerTeam = new ComputerTeam(loadGame.computerTeam.characters);
+    this.players = [];
+    this.activePlayer = null;
+    this.heroTarget = null;
+    this.villainTarget = null;
+    this.target = null;
+    this.startThemes = loadGame.startThemes;
+    this.turn = loadGame.turn;
+
+    this.init();
+  }
+
+  onSaveGameClick() {
+    const state = {
+      gamePlay: this.gamePlay,
+      stateService: this.stateService,
+      playerTeam: this.playerTeam,
+      computerTeam: this.computerTeam,
+      startThemes: this.startThemes,
+      turn: this.turn,
+    };
+    this.stateService.save(state);
+  }
+
+  levelUp() {
+    this.playerTeam.characters.forEach((item) => {
+      item.character.level += 1;
+      item.character.health += 80;
+      if (item.character.health > 100) {
+        item.character.health = 100;
+      }
+      item.character.attack = Math.max(item.character.attack, (item.character.attack * (80 + item.character.health)) / 100);
+    });
   }
 
   static findShow(player) {

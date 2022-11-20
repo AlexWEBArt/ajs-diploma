@@ -1,7 +1,3 @@
-import Undead from '../characters/Undead';
-import Vampire from '../characters/Vampire';
-import Daemon from '../characters/Daemon';
-
 export default class ComputerTeam {
   constructor(characters) {
     this.characters = characters;
@@ -56,7 +52,7 @@ export default class ComputerTeam {
       if (item.includes(activeComputer.position)) {
         x = item.findIndex((num) => num === activeComputer.position);
         y = this.fd.findIndex((elem) => elem === item);
-        if (activeComputer.character instanceof Daemon) {
+        if (activeComputer.character.type === 'daemon') {
           if (y === 0) {
             this.areaOfMovement = [
               this.fd[y][x - 1], this.fd[y][x + 1],
@@ -75,7 +71,7 @@ export default class ComputerTeam {
             ];
           }
         }
-        if (activeComputer.character instanceof Vampire) {
+        if (activeComputer.character.type === 'vampire') {
           if (y === 0) {
             this.areaOfMovement = [
               this.fd[y][x - 2], this.fd[y][x - 1], this.fd[y][x + 1], this.fd[y][x + 2],
@@ -112,7 +108,7 @@ export default class ComputerTeam {
             ];
           }
         }
-        if (activeComputer.character instanceof Undead) {
+        if (activeComputer.character.type === 'undead') {
           if (y === 0) {
             this.areaOfMovement = [
               this.fd[y][x - 4], this.fd[y][x - 3], this.fd[y][x - 2], this.fd[y][x - 1], this.fd[y][x + 1], this.fd[y][x + 2], this.fd[y][x + 3], this.fd[y][x + 4],
@@ -215,7 +211,7 @@ export default class ComputerTeam {
       if (item.includes(activeComputer.position)) {
         x = item.findIndex((num) => num === activeComputer.position);
         y = this.fd.findIndex((elem) => elem === item);
-        if (activeComputer.character instanceof Undead) {
+        if (activeComputer.character.type === 'undead') {
           if (y === 0) {
             this.attackRadius = [
               this.fd[y][x - 1], this.fd[y][x + 1],
@@ -234,7 +230,7 @@ export default class ComputerTeam {
             ];
           }
         }
-        if (activeComputer.character instanceof Vampire) {
+        if (activeComputer.character.type === 'vampire') {
           if (y === 0) {
             this.attackRadius = [
               this.fd[y][x - 2], this.fd[y][x - 1], this.fd[y][x + 1], this.fd[y][x + 2],
@@ -271,7 +267,7 @@ export default class ComputerTeam {
             ];
           }
         }
-        if (activeComputer.character instanceof Daemon) {
+        if (activeComputer.character.type === 'daemon') {
           // this.areaOfMovement = [
           //     this.fd[y - 4][x - 4], this.fd[y - 4][x - 3], this.fd[y - 4][x - 2], this.fd[y - 4][x - 1], this.fd[y - 4][x], this.fd[y - 4][x + 1], this.fd[y - 4][x + 2], this.fd[y - 4][x + 3], this.fd[y - 4][x + 4],
           //     this.fd[y - 3][x - 4], this.fd[y - 3][x - 3], this.fd[y - 3][x - 2], this.fd[y - 3][x - 1], this.fd[y - 3][x], this.fd[y - 3][x + 1], this.fd[y - 3][x + 2], this.fd[y - 3][x + 3], this.fd[y - 3][x + 4],
